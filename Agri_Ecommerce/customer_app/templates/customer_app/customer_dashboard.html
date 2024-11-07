@@ -30,8 +30,9 @@
                 </div>
                 <div class="stat-box">
                     <i class="fas fa-shopping-cart stat-icon"></i>
-                    <span class="stat-number">{{ cart_items.count|default:"0" }}</span>
+                    <span class="stat-number">{{ cart_items_count|default:"0" }}</span>
                     <span class="stat-label">Cart Items</span>
+                    <span class="badge">{{ cart_items_count }}</span>
                 </div>
                 <div class="stat-box">
                     <i class="fas fa-heart stat-icon"></i>
@@ -104,7 +105,7 @@
                                     </form>
                                     <form method="POST" action="{% url 'add_to_wishlist' product.id %}" class="wishlist-form">
                                         {% csrf_token %}
-                                        <button type="submit" class="btn btn-wishlist" title="Add to Wishlist">
+                                        <button type="submit" class="btn btn-wishlist {% if product in wishlist_products %}in-wishlist{% endif %}" title="{% if product in wishlist_products %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}">
                                             <i class="fas fa-heart"></i>
                                         </button>
                                     </form>

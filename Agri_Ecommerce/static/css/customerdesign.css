@@ -379,13 +379,6 @@ body {
     gap: 0.5rem;
 }
 
-.badge {
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
 .badge.organic {
     background-color: #28a745;
     color: white;
@@ -411,17 +404,24 @@ body {
 }
 
 .btn-wishlist {
-    padding: 0.75rem;
-    background: none;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
+    background: transparent;
+    border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
+    padding: 8px;
 }
 
-.btn-wishlist:hover {
-    background-color: #fff5f5;
-    color: #dc3545;
+.btn-wishlist .fa-heart {
+    color: #808080; /* Default gray color */
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.btn-wishlist.in-wishlist .fa-heart {
+    color: #ff0000; /* Red color when in wishlist */
+}
+
+.btn-wishlist:hover .fa-heart {
+    color: #ff0000; /* Red color on hover */
 }
 
 /* Pagination */
@@ -561,16 +561,6 @@ body {
 
 .card:hover .card-image img {
     transform: scale(1.05);
-}
-
-/* Enhanced Badges */
-.badge {
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
 .badge.featured {
@@ -733,16 +723,22 @@ body {
 
 /* Badge Styles */
 .badge {
+    display: inline-block; /* Ensure it behaves like an inline element */
+    margin-top: 0.5rem; /* Add some space above the badge */
     position: absolute;
     top: -5px;
-    right: -5px;
+    right: -15px;
     background-color: #dc3545;
     color: white;
-    font-size: 0.7rem;
-    padding: 0.2rem 0.4rem;
-    border-radius: 10px;
-    min-width: 18px;
+    font-size: 0.8rem; /* Consistent font size */
+    padding: 0.25rem 0.5rem; /* Adjusted padding for better fit */
+    border-radius: 10px; /* Slightly smaller radius for a modern look */
+    min-width: 20px; /* Minimum width for better visibility */
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
 }
 
 /* Profile Menu Styles */
@@ -920,11 +916,6 @@ body {
 .dropdown-item:focus-visible {
     outline: 2px solid var(--forest-green);
     outline-offset: 2px;
-}
-
-/* Enhanced Badge Animations */
-.badge {
-    transition: transform 0.2s ease;
 }
 
 .nav-link:hover .badge {
@@ -1159,33 +1150,23 @@ body {
 
 .btn-wishlist {
     background: transparent;
-    border: 1px solid var(--border-color);
-    color: #dc3545;
-    padding: 0.75rem;
-    border-radius: 5px;
+    border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 45px;
-    height: 45px;
+    padding: 8px;
 }
 
-.btn-wishlist:hover {
-    background-color: #fff5f5;
-    border-color: #dc3545;
-    transform: scale(1.05);
-}
-
-.btn-wishlist i {
+.btn-wishlist .fa-heart {
+    color: #808080; /* Default gray color */
     font-size: 1.2rem;
+    transition: color 0.3s ease;
 }
 
-.btn-wishlist.active {
-    background-color: #dc3545;
-    border-color: #dc3545;
-    color: white;
+.btn-wishlist.in-wishlist .fa-heart {
+    color: #ff0000; /* Red color when in wishlist */
+}
+
+.btn-wishlist:hover .fa-heart {
+    color: #ff0000; /* Red color on hover */
 }
 
 @media (max-width: 768px) {
@@ -1193,7 +1174,7 @@ body {
         flex-direction: row;
         align-items: stretch;
     }
-
+    
     .btn-wishlist {
         width: 45px;
         height: auto;
@@ -1391,4 +1372,32 @@ body {
     display: flex;
     gap: 10px;
     margin-top: 15px;
+}
+
+/* Update the wishlist button styles */
+.btn-wishlist {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.btn-wishlist .fa-heart {
+    color: #808080; /* Default gray color */
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.btn-wishlist.in-wishlist .fa-heart {
+    color: #ff0000; /* Red color when in wishlist */
+}
+
+.btn-wishlist:hover .fa-heart {
+    color: #ff0000; /* Red color on hover */
+}
+
+.btn-wishlist.in-wishlist {
+    background-color: #fff5f5;
+    border-color: #dc3545;
+    color: #dc3545;
 }
