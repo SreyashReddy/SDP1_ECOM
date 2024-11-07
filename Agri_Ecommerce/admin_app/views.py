@@ -1,9 +1,8 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
 from auth_app.models import FarmerProfile, CustomerProfile
 from product_app.models import Product
-from order_app.models import Order
+from customer_app.models import CartItem  # Use CartItem instead of an Order model
 
 # Custom check to ensure only superusers can access the admin dashboard
 def admin_check(user):
@@ -13,17 +12,17 @@ def admin_check(user):
 @login_required
 @user_passes_test(admin_check)
 def admin_dashboard(request):
-    # Count the number of farmers, customers, products, and orders
+    # Count the number of farmers, customers, products, and cart items
     farmer_count = FarmerProfile.objects.count()
     customer_count = CustomerProfile.objects.count()
-    product_count = Product.objects.count()  # Get the number of products
-    order_count = Order.objects.count()  # Get the number of orders
+    product_count = Product.objects.count()
+    cart_item_count = CartItem.objects.count()  # Count CartItem entries as a substitute for orders
 
     context = {
         'farmer_count': farmer_count,
         'customer_count': customer_count,
         'product_count': product_count,
-        'order_count': order_count,
+        'cart_item_count': cart_item_count,
     }
 
     # Render the admin dashboard template
@@ -63,12 +62,12 @@ def product_list(request):
     return render(request, 'admin_app/product_list.html', context)
 
 
-# View to list all orders
+# View to list all cart items (as a substitute for order list)
 @login_required
 @user_passes_test(admin_check)
 def order_list(request):
-    orders = Order.objects.all()  # Get all orders
+    cart_items = CartItem.objects.all()  # Get all cart items
     context = {
-        'orders': orders,
+        'cart_items': cart_items,
     }
     return render(request, 'admin_app/order_list.html', context)

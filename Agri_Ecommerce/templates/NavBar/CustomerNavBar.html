@@ -10,10 +10,12 @@
             </a>
         </li>
         <li>
-            <a href="{% url 'view_cart' %}" class="nav-link cart-link">
+            <a href="{% url 'customer_cart' %}" class="nav-link cart-link">
                 <i class="fas fa-shopping-cart"></i>
                 <span>Cart</span>
-                <span id="cart-count" class="badge">{{ cart_items_count|default:"0" }}</span>
+                {% if cart_items_count > 0 %}
+                    <span class="badge">{{ cart_items_count }}</span>
+                {% endif %}
             </a>
         </li>
         <li>

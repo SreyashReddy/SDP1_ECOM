@@ -10,7 +10,7 @@ urlpatterns = [
     path('farmer/', include('farmer_app.urls')),        # Farmer-related URLs
     path('products/', include('product_app.urls')),     # Product-related URLs
     path('customer/', include('customer_app.urls')),    # Customer-related URLs
-    path('orders/', include('order_app.urls')),         # Order-related URLs
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # Add media URL patterns

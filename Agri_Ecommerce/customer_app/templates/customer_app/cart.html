@@ -15,21 +15,20 @@
     </header>
 
     <h1>Your Cart</h1>
-    {% if orders %}
+    {% if cart_items %}
         <div class="cart-container">
-            {% for order in orders %}
+            {% for item in cart_items %}
                 <div class="cart-item">
                     <div class="product-image">
-                        <img src="{{ order.product.image.url }}" alt="{{ order.product.name }}" width="100" height="100">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" width="100" height="100">
                     </div>
                     <div class="product-details">
-                        <p><strong>{{ order.product.name }}</strong></p>
-                        <p>Quantity: {{ order.quantity }}</p>
-                        <p>Price: ${{ order.product.price|floatformat:2 }}</p>
-
+                        <p><strong>{{ item.product.name }}</strong></p>
+                        <p>Quantity: {{ item.quantity }}</p>
+                        <p>Price: ₹{{ item.product.price|floatformat:2 }}</p>
                     </div>
                     <div class="action-button">
-                        <a href="{% url 'payment_gateway' order.id %}" class="btn-payment">Proceed to Payment</a>
+                        <a href="#" class="btn-payment">Proceed to Payment</a>
                     </div>
                 </div>
             {% endfor %}
