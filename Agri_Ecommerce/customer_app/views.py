@@ -10,13 +10,16 @@ def customer_dashboard(request):
     products = Product.objects.all()  # Fetches all products
     # Cart and Wishlist Counts
     cart_items_count = CartItem.objects.filter(user=request.user).count()
-    cart_items_count = CartItem.objects.filter(user=request.user).count()
     wishlist_count = Wishlist.objects.filter(user=request.user).count()
+
+    # Get list of product IDs in user's wishlist
+    wishlist_products = Product.objects.filter(wishlist__user=request.user)
 
     context = {
         'products': products,
         'cart_items_count': cart_items_count,
-        'wishlist_count': wishlist_count
+        'wishlist_count': wishlist_count,
+        'wishlist_products': wishlist_products
     }
     return render(request, 'customer_app/customer_dashboard.html', context)
 

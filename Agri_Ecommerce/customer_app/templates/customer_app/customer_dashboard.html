@@ -104,7 +104,7 @@
                                     </form>
                                     <form method="POST" action="{% url 'add_to_wishlist' product.id %}" class="wishlist-form">
                                         {% csrf_token %}
-                                        <button type="submit" class="btn btn-wishlist" title="Add to Wishlist">
+                                        <button type="submit" class="btn btn-wishlist {% if product in wishlist_products %}in-wishlist{% endif %}" title="{% if product in wishlist_products %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}">
                                             <i class="fas fa-heart"></i>
                                         </button>
                                     </form>

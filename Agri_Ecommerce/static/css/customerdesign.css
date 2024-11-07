@@ -411,17 +411,24 @@ body {
 }
 
 .btn-wishlist {
-    padding: 0.75rem;
-    background: none;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
+    background: transparent;
+    border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
+    padding: 8px;
 }
 
-.btn-wishlist:hover {
-    background-color: #fff5f5;
-    color: #dc3545;
+.btn-wishlist .fa-heart {
+    color: #808080; /* Default gray color */
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.btn-wishlist.in-wishlist .fa-heart {
+    color: #ff0000; /* Red color when in wishlist */
+}
+
+.btn-wishlist:hover .fa-heart {
+    color: #ff0000; /* Red color on hover */
 }
 
 /* Pagination */
@@ -1159,33 +1166,23 @@ body {
 
 .btn-wishlist {
     background: transparent;
-    border: 1px solid var(--border-color);
-    color: #dc3545;
-    padding: 0.75rem;
-    border-radius: 5px;
+    border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 45px;
-    height: 45px;
+    padding: 8px;
 }
 
-.btn-wishlist:hover {
-    background-color: #fff5f5;
-    border-color: #dc3545;
-    transform: scale(1.05);
-}
-
-.btn-wishlist i {
+.btn-wishlist .fa-heart {
+    color: #808080; /* Default gray color */
     font-size: 1.2rem;
+    transition: color 0.3s ease;
 }
 
-.btn-wishlist.active {
-    background-color: #dc3545;
-    border-color: #dc3545;
-    color: white;
+.btn-wishlist.in-wishlist .fa-heart {
+    color: #ff0000; /* Red color when in wishlist */
+}
+
+.btn-wishlist:hover .fa-heart {
+    color: #ff0000; /* Red color on hover */
 }
 
 @media (max-width: 768px) {
@@ -1193,7 +1190,7 @@ body {
         flex-direction: row;
         align-items: stretch;
     }
-
+    
     .btn-wishlist {
         width: 45px;
         height: auto;
@@ -1391,4 +1388,32 @@ body {
     display: flex;
     gap: 10px;
     margin-top: 15px;
+}
+
+/* Update the wishlist button styles */
+.btn-wishlist {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.btn-wishlist .fa-heart {
+    color: #808080; /* Default gray color */
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.btn-wishlist.in-wishlist .fa-heart {
+    color: #ff0000; /* Red color when in wishlist */
+}
+
+.btn-wishlist:hover .fa-heart {
+    color: #ff0000; /* Red color on hover */
+}
+
+.btn-wishlist.in-wishlist {
+    background-color: #fff5f5;
+    border-color: #dc3545;
+    color: #dc3545;
 }
