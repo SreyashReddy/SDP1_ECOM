@@ -1,0 +1,38 @@
+{% for product in products %}
+    <div class="product-card" data-category="{{ product.category }}">
+        <div class="product-image">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+            {% else %}
+                <div class="no-image">
+                    <i class="fas fa-image"></i>
+                </div>
+            {% endif %}
+        </div>
+        <div class="product-content">
+            <h3 class="product-title">{{ product.name }}</h3>
+            <p class="product-description">{{ product.description|truncatechars:100 }}</p>
+            <div class="product-details">
+                <span class="price">₹{{ product.price }}</span>
+                <span class="stock">Stock: {{ product.quantity }}</span>
+            </div>
+            <div class="product-actions">
+                <button class="edit-btn" onclick="openEditModal('{{ product.id }}')">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+                <button class="delete-btn" onclick="confirmDelete('{{ product.id }}')">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+{% empty %}
+    <div class="no-products">
+        <i class="fas fa-box-open"></i>
+        <h3>No Products Found</h3>
+        <p>Start adding your agricultural products to showcase them to potential buyers.</p>
+        <a href="{% url 'add_product' %}" class="add-product-btn">
+            <i class="fas fa-plus"></i> Add Your First Product
+        </a>
+    </div>
+{% endfor %} 

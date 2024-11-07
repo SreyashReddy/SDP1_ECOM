@@ -1,0 +1,140 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - Kisan Vishwa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/customerdesign.css' %}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="{% static 'images/kisan_vishwa_logo.png' %}" alt="Kisan Vishwa Logo">
+        </div>
+        <div class="nav-container">
+            {% include 'NavBar/CustomerNavBar.html' %}
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="dashboard-stats-container">
+            <div class="dashboard-stats">
+                <div class="stat-box">
+                    <i class="fas fa-shopping-bag stat-icon"></i>
+                    <span class="stat-number">{{ orders.count|default:"0" }}</span>
+                    <span class="stat-label">Orders</span>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-shopping-cart stat-icon"></i>
+                    <span class="stat-number">{{ cart_items.count|default:"0" }}</span>
+                    <span class="stat-label">Cart Items</span>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-heart stat-icon"></i>
+                    <span class="stat-number">{{ wishlist_count|default:"0" }}</span>
+                    <span class="stat-label">Wishlist</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="products-section">
+            <h2 class="section-title">Available Products</h2>
+            
+            <!-- Search and Filter Controls -->
+            <div class="products-controls">
+                <div class="search-filter">
+                    <form method="GET" action="{% url 'customer_dashboard' %}" class="filter-form">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" name="search" placeholder="Search products..." 
+                                   value="{{ request.GET.search|default:'' }}">
+                        </div>
+                        <div class="filter-group">
+                            <select name="category" onchange="this.form.submit()">
+                                <option value="">All Categories</option>
+                                {% for category in categories %}
+                                    <option value="{{ category.0 }}" 
+                                            {% if request.GET.category == category.0 %}selected{% endif %}>
+                                        {{ category.1 }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <select name="sort" onchange="this.form.submit()">
+                                <option value="newest">Newest First</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="card-grid">
+                {% if products %}
+                    {% for product in products %}
+                        <article class="card">
+                            <div class="card-image">
+                                {% if product.image %}
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+                                {% endif %}
+                            </div>
+                            <div class="card-content">
+                                <h2 class="card-title">{{ product.name }}</h2>
+                                <p class="card-description">{{ product.description|truncatechars:100 }}</p>
+                                <div class="product-details">
+                                    <div class="price-stock">
+                                        <span class="price">₹{{ product.price }}</span>
+                                        <span class="stock">Stock: {{ product.stock }}</span>
+                                    </div>
+                                </div>
+                                <div class="card-actions">
+                                    <form method="POST" action="{% url 'add_to_cart' product.id %}" class="add-to-cart-form">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-cart-plus"></i> Add to Cart
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-products-message">
+                        <i class="fas fa-box-open"></i>
+                        <p>No products available at the moment.</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Pagination -->
+            {% if products.has_other_pages %}
+                <div class="pagination">
+                    {% if products.has_previous %}
+                        <a href="?page={{ products.previous_page_number }}" class="page-link">&laquo; Previous</a>
+                    {% endif %}
+                    
+                    <span class="current-page">
+                        Page {{ products.number }} of {{ products.paginator.num_pages }}
+                    </span>
+
+                    {% if products.has_next %}
+                        <a href="?page={{ products.next_page_number }}" class="page-link">Next &raquo;</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Kisan Vishwa. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,108 @@
+{% load static %}
+
+{% if user.is_authenticated %}
+<nav class="nav-menu">
+    <ul class="nav-links">
+        <li>
+            <a href="{% url 'customer_dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'customer_dashboard' %}active{% endif %}">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'view_cart' %}" class="nav-link cart-link">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Cart</span>
+                <span id="cart-count" class="badge">{{ cart_items_count|default:"0" }}</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link {% if request.resolver_match.url_name == 'wishlist' %}active{% endif %}">
+                <i class="fas fa-heart"></i>
+                <span>Wishlist</span>
+                {% if wishlist_count > 0 %}
+                    <span class="badge">{{ wishlist_count }}</span>
+                {% endif %}
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link {% if request.resolver_match.url_name == 'shop' %}active{% endif %}">
+                <i class="fas fa-store"></i>
+                <span>Shop</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link {% if request.resolver_match.url_name == 'orders' %}active{% endif %}">
+                <i class="fas fa-shopping-bag"></i>
+                <span>My Orders</span>
+                {% if orders_count > 0 %}
+                    <span class="badge">{{ orders_count }}</span>
+                {% endif %}
+            </a>
+        </li>
+        <li class="profile-menu">
+            <a href="#" class="nav-link profile-toggle">
+                <div class="profile-info">
+                    {% if user.customer_profile.profile_picture %}
+                        <img src="{{ user.customer_profile.profile_picture.url }}" alt="Profile" class="profile-pic">
+                    {% else %}
+                        <i class="fas fa-user"></i>
+                    {% endif %}
+                    <span>{{ user.username|truncatechars:12 }}</span>
+                </div>
+                <i class="fas fa-chevron-down"></i>
+            </a>
+            <div class="dropdown-menu">
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-user-circle"></i>
+                    <span>My Profile</span>
+                </a>
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Delivery Address</span>
+                </a>
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-heart"></i>
+                    <span>Favorite Farmers</span>
+                </a>
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{% url 'logout' %}" class="dropdown-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const profileToggle = document.querySelector('.profile-toggle');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+
+    // Toggle dropdown on click
+    profileToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!profileToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.style.display = 'none';
+        }
+    });
+
+    // Add escape key support
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && dropdownMenu.style.display === 'block') {
+            dropdownMenu.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endif %}
