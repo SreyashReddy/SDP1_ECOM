@@ -6,7 +6,8 @@
     <title>Your Cart</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/customerdesign.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/customernavbar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/cart.css' %}">
 </head>
 <body>
     <header class="header">
@@ -19,40 +20,50 @@
     </header>
 
     <main class="main-content">
-        <h1 class="section-title">Your Cart</h1>
-        {% if cart_items %}
-            <div class="card-grid">
-                {% for item in cart_items %}
-                    <article class="card">
-                        <div class="card-image">
-                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-                        </div>
-                        <div class="card-content">
-                            <h2 class="card-title">{{ item.product.name }}</h2>
-                            <div class="product-details">
-                                <p>Quantity: {{ item.quantity }}</p>
-                                <p class="price">Price: ₹{{ item.product.price|floatformat:2 }}</p>
+        <section class="cart-section">
+            <h1 class="section-title">Your Cart</h1>
+            
+            {% if cart_items %}
+                <div class="cart-grid">
+                    {% for item in cart_items %}
+                        <article class="cart-card">
+                            <div class="cart-image">
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
                             </div>
-                            <div class="card-actions">
-                                <form method="POST" action="{% url 'remove_from_cart' item.id %}" class="remove-form">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="fas fa-trash"></i> Remove
+                            <div class="cart-content">
+                                <h2 class="cart-title">{{ item.product.name }}</h2>
+                                <div class="cart-details">
+                                    <div class="price-quantity">
+                                        <span class="cart-price">₹{{ item.product.price|floatformat:2 }}</span>
+                                        <div class="quantity-info">
+                                            <span>Quantity:</span>
+                                            <span class="quantity-value">{{ item.quantity }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cart-actions">
+                                    <form method="POST" action="{% url 'remove_from_cart' item.id %}" class="remove-form">
+                                        {% csrf_token %}
+                                        <button type="submit" class="remove-btn">
+                                            <i class="fas fa-trash"></i> Remove
+                                        </button>
+                                    </form>
+                                    <button class="checkout-btn">
+                                        <i class="fas fa-shopping-cart"></i> Checkout
                                     </button>
-                                </form>
-                                <a href="#" class="btn btn-primary">Proceed to Payment</a>
-                                <span class="badge">{{ item.quantity }}</span>
+                                </div>
                             </div>
-                        </div>
-                    </article>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="no-items-message">
-                <i class="fas fa-shopping-cart"></i>
-                <p>Your cart is empty.</p>
-            </div>
-        {% endif %}
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-cart-items">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Your cart is empty</h3>
+                    <p>Add some products to your cart to see them here.</p>
+                </div>
+            {% endif %}
+        </section>
     </main>
 
     <footer class="footer">
