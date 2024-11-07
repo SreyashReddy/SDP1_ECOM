@@ -21,6 +21,7 @@ def farmer_dashboard(request):
         'form': form,
         'products_count': products.count(),  # Count of products for the overview
     }
+    print("hi")
 
     return render(request, 'farmer_app/farmer_dashboard.html', context)
 
