@@ -5,23 +5,20 @@
     <ul class="nav-links">
         <li>
             <a href="{% url 'customer_dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'customer_dashboard' %}active{% endif %}">
-                <i class="fas fa-home"></i>
-                <span>Dashboard</span>
+                <i class="fas fa-tachometer-alt"></i> Dashboard
             </a>
         </li>
         <li>
-            <a href="{% url 'customer_cart' %}" class="nav-link cart-link">
-                <i class="fas fa-shopping-cart"></i>
-                <span>Cart</span>
+            <a href="{% url 'customer_cart' %}" class="nav-link cart-link {% if request.resolver_match.url_name == 'customer_cart' %}active{% endif %}">
+                <i class="fas fa-shopping-cart"></i> Cart
                 {% if cart_items_count > 0 %}
                     <span class="badge">{{ cart_items_count }}</span>
                 {% endif %}
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link {% if request.resolver_match.url_name == 'wishlist' %}active{% endif %}">
-                <i class="fas fa-heart"></i>
-                <span>Wishlist</span>
+            <a href="{% url 'customer_wishlist' %}" class="nav-link {% if request.resolver_match.url_name == 'customer_wishlist' %}active{% endif %}">
+                <i class="fas fa-heart"></i> Wishlist
                 {% if wishlist_count > 0 %}
                     <span class="badge">{{ wishlist_count }}</span>
                 {% endif %}

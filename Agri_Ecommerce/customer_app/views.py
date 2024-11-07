@@ -56,3 +56,17 @@ def add_to_wishlist(request, product_id):
             messages.info(request, 'Product removed from wishlist!')
 
     return redirect('customer_dashboard')
+
+
+@login_required
+def view_wishlist(request):
+    wishlist_items = Wishlist.objects.filter(user=request.user)
+    return render(request, 'customer_app/wishlist.html', {'wishlist_items': wishlist_items})
+
+
+@login_required
+def remove_from_cart(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id, user=request.user)
+    cart_item.delete()
+    messages.success(request, 'Item removed from cart!')
+    return redirect('customer_cart')

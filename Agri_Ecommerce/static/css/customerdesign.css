@@ -379,13 +379,6 @@ body {
     gap: 0.5rem;
 }
 
-.badge {
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
 .badge.organic {
     background-color: #28a745;
     color: white;
@@ -570,16 +563,6 @@ body {
     transform: scale(1.05);
 }
 
-/* Enhanced Badges */
-.badge {
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
 .badge.featured {
     background-color: #ffd700;
     color: var(--text-primary);
@@ -740,16 +723,22 @@ body {
 
 /* Badge Styles */
 .badge {
+    display: inline-block; /* Ensure it behaves like an inline element */
+    margin-top: 0.5rem; /* Add some space above the badge */
     position: absolute;
     top: -5px;
-    right: -5px;
+    right: -15px;
     background-color: #dc3545;
     color: white;
-    font-size: 0.7rem;
-    padding: 0.2rem 0.4rem;
-    border-radius: 10px;
-    min-width: 18px;
+    font-size: 0.8rem; /* Consistent font size */
+    padding: 0.25rem 0.5rem; /* Adjusted padding for better fit */
+    border-radius: 10px; /* Slightly smaller radius for a modern look */
+    min-width: 20px; /* Minimum width for better visibility */
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
 }
 
 /* Profile Menu Styles */
@@ -927,11 +916,6 @@ body {
 .dropdown-item:focus-visible {
     outline: 2px solid var(--forest-green);
     outline-offset: 2px;
-}
-
-/* Enhanced Badge Animations */
-.badge {
-    transition: transform 0.2s ease;
 }
 
 .nav-link:hover .badge {

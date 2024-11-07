@@ -30,8 +30,9 @@
                 </div>
                 <div class="stat-box">
                     <i class="fas fa-shopping-cart stat-icon"></i>
-                    <span class="stat-number">{{ cart_items.count|default:"0" }}</span>
+                    <span class="stat-number">{{ cart_items_count|default:"0" }}</span>
                     <span class="stat-label">Cart Items</span>
+                    <span class="badge">{{ cart_items_count }}</span>
                 </div>
                 <div class="stat-box">
                     <i class="fas fa-heart stat-icon"></i>

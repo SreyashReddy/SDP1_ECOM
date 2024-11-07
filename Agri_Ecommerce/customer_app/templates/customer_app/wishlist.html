@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cart</title>
+    <title>Your Wishlist</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/customerdesign.css' %}">
@@ -19,29 +19,28 @@
     </header>
 
     <main class="main-content">
-        <h1 class="section-title">Your Cart</h1>
-        {% if cart_items %}
+        <h1 class="section-title">Your Wishlist</h1>
+        {% if wishlist_items %}
             <div class="card-grid">
-                {% for item in cart_items %}
+                {% for item in wishlist_items %}
                     <article class="card">
                         <div class="card-image">
                             <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
                         </div>
                         <div class="card-content">
                             <h2 class="card-title">{{ item.product.name }}</h2>
+                            <p class="card-description">{{ item.product.description|truncatechars:100 }}</p>
                             <div class="product-details">
-                                <p>Quantity: {{ item.quantity }}</p>
-                                <p class="price">Price: ₹{{ item.product.price|floatformat:2 }}</p>
+                                <span class="price">₹{{ item.product.price }}</span>
                             </div>
                             <div class="card-actions">
-                                <form method="POST" action="{% url 'remove_from_cart' item.id %}" class="remove-form">
+                                <form method="POST" action="{% url 'add_to_cart' item.product.id %}">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="fas fa-trash"></i> Remove
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-cart-plus"></i> Add to Cart
                                     </button>
                                 </form>
-                                <a href="#" class="btn btn-primary">Proceed to Payment</a>
-                                <span class="badge">{{ item.quantity }}</span>
+                                <span class="badge">{{ item.product.wishlist_count }}</span>
                             </div>
                         </div>
                     </article>
@@ -49,8 +48,8 @@
             </div>
         {% else %}
             <div class="no-items-message">
-                <i class="fas fa-shopping-cart"></i>
-                <p>Your cart is empty.</p>
+                <i class="fas fa-heart"></i>
+                <p>Your wishlist is empty.</p>
             </div>
         {% endif %}
     </main>
